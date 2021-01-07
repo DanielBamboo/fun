@@ -1,0 +1,31 @@
+# Project: airplane
+# Makefile created by Dev-C++ 5.11
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = main.o ../../代码领域/测试用_命名顺序123/acllib.o
+LINKOBJ  = main.o ../../代码领域/测试用_命名顺序123/acllib.o
+LIBS     = -L"D:/myICPC/Dev-Cpp/MinGW64/lib" -L"D:/myICPC/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -mwindows ../../myICPC/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib/libwinmm.a ../../myICPC/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib/libmsimg32.a ../../myICPC/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib/libkernel32.a ../../myICPC/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib/libuser32.a ../../myICPC/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib/libgdi32.a ../../myICPC/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib/libole32.a ../../myICPC/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib/liboleaut32.a ../../myICPC/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib/libuuid.a
+INCS     = -I"D:/myICPC/Dev-Cpp/MinGW64/include" -I"D:/myICPC/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/myICPC/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"D:/myICPC/Dev-Cpp/MinGW64/include" -I"D:/myICPC/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/myICPC/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/myICPC/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
+BIN      = airplane.exe
+CXXFLAGS = $(CXXINCS) -std=c11
+CFLAGS   = $(INCS) -std=c11
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+main.o: main.c
+	$(CC) -c main.c -o main.o $(CFLAGS)
+
+../../代码领域/测试用_命名顺序123/acllib.o: ../../代码领域/测试用_命名顺序123/acllib.c
+	$(CC) -c ../../代码领域/测试用_命名顺序123/acllib.c -o ../../代码领域/测试用_命名顺序123/acllib.o $(CFLAGS)
