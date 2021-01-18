@@ -1,0 +1,44 @@
+{% extends "base.html" %} {% block main %}
+
+<ul>
+    {% for item in accumulate %}
+    <li>{{ item.number }}, {{ item.date }}, {{ item.who }}</li>
+    {% endfor %}
+</ul>
+
+<label>{{name}}</label>
+<label id="counter"></label>
+
+{% if todayDone %}
+<p>你今日已经打卡了</p>
+{% else %}
+<button id="plus">+</button>
+{% endif %}
+
+<script>
+
+
+    
+    document.getElementById('plus').onclick = function () {
+        var xmlhttp;
+        if (window.XMLHttpRequest) {
+            //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+            xmlhttp = new XMLHttpRequest();
+        }
+        xmlhttp.open('POST', '/accumulate', true);
+        xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xmlhttp.send("plus=true");
+
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                document.getElementById('counter').innerHTML = 'yes';
+                document.getElementById('plus').hidden = true;
+                location.reload();
+            } else if (xmlhttp.readyState == 4 && xmlhttp.status == 400) {
+                document.getElementById('counter').innerHTML = xmlhttp.responseText;
+            }
+        }
+    }
+</script>
+
+{% endblock %}

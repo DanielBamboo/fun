@@ -1,0 +1,1 @@
+{"number":1,"finished":{"阿洁":1,"恒炜":0},"failed":0,"accumulate":[{"number":1,"who":"阿洁","date":"2021/1/18"}],"lastUpdated":"2021/1/18"}

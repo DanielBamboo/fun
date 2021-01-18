@@ -1,0 +1,100 @@
+accumulate表示当前正在累积的天数
+
+格式如下
+| No. | Who | Date |
+| 1   | ajie| 2021/1/18 | 
+| 1   | hengwei | 2021/1/18 |
+| 2   | ajie| 2021/1/19 |
+| 2   | hengwei | 2021/1/19 |
+| 3   | ajie | 2021/1/20 |
+| 3   | ajie | 2021/1/21 |
+| 3   | hengwei | 2021/1/21 |
+
+No. 由服务器更新
+逻辑：
+在第二天起床的时候登记前一天是否达成任务
+服务器维持一个状态量 No. 以及 finished
+第二天23:59:59服务器执行一个任务，如果finished != 2，则finished重置为0，failed 计数器加1
+当这一天内两个人都更新了状态后，No. ++
+
+一个周期是30天，有三天的宽容期，当failed为4的时候，accumulate.txt >> accumulate(failed).txt 同时 accumulate.txt被清空
+当No. == 31的时候，自动归档，accumulate.txt >> accumulate(succeed).txt
+
+设计一个JSON格式用于accumulate.txt、accumulate(failed).txt、accumulate(succeed).txt的存取
+
+每次读入数据的时候，将这些txt中的数据作为JSON读取形成一个对象
+
+failed/succeed.txt
+[
+    {
+        periodCounter: 1,
+        accumulate: [
+            {
+                No.:
+                Who:
+                Date:
+            },
+            {
+                No.:
+                Who:
+                Date:
+            },
+            ......
+        ]
+    },
+    {
+        periodCounter: 2,
+        accumulate: [
+            {
+                ...
+            },
+            {
+                ...
+            },
+            ......
+        ]
+    }
+]
+
+当恢复的时候，读这个文件，具有这么几个状态量：
+No.:
+Finished:
+LastUpdated:
+
+由于是第二天更新，如果第二天系统崩溃，第三天回来读取的时候，发现lastUpdated是昨天，那么要替昨天执行23:59:59的任务
+
+accumulate.txt
+data变量
+{
+    lastUpdated: ,
+    No.: ,
+    Finished: {
+        "阿洁": 0,
+        "恒炜": 0
+    }
+    Failed: ,
+    accumulate: [
+        {
+            No.:
+            Who:
+            Date:
+        },
+        {
+            No.:
+            Who:
+            Date:
+        },
+        ......
+    ]
+}
+
+每天23:59:59进行一次备份，将这三个文件备份到另外一个目录下
+这三个文件具有死而复生的能力
+
+accumulate.txt何时更新：
+1. 当ajie/hengwei提交+1的时候，修改data变量，将data stringify后写入accumulate.txt
+2. 23:59:59任务
+
+当服务器重新启动的时候，读取accumulate.txt，然后根据accumulate.txt的状态来判断
+
+23:59:59这个任务是用于处理失败的，而成功的情况会在当天直接处理
