@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: #000;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* border: 1px solid #fff; */
+        }
+
+        .loader-box {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .loader {
+            position: absolute;
+            width: calc(100% - 10px);
+            height: calc(100% - 10px);
+            border: 5px solid rgb(0, 0, 0);
+            border-top: 5px solid #09f;
+            border-radius: 50%;
+            animation: rotate 3s ease infinite;
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotate(-360deg);
+            }
+        }
+
+        #box {
+            position: absolute;
+            left: 50%;
+            top: 70%;
+            height: 50px;
+            width: 300px;
+            background-color: aliceblue;
+            transform: translate(-50%, -50%);
+
+            transition: 0.2s;
+        }
+
+        #bar {
+            overflow: hidden;
+            height: 100%;
+            width: 0;
+            background-color: #09f;
+
+            transition: 0.2s;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="back">
+        <div class="container">
+            <div class="loader-box">
+                <div class="loader">
+                    <div class="loader">
+                        <div class="loader">
+                            <div class="loader">
+                                <div class="loader">
+                                    <div class="loader">
+                                        <div class="loader">
+                                            <div class="loader">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="box">
+            <div id="bar"></div>
+        </div>
+    </div>
+
+    <script>
+        let width = 0;
+        let id = 0;
+
+        function add() {
+            if (width < 100) {
+                width += 10;
+                document.getElementById('bar').style.width = width + '%';
+            } else {
+                clearInterval(id);
+                window.location.href = "/about"
+            }
+        }
+
+        id = setInterval(add, 1000);
+    </script>
+</body>
+
+</html>

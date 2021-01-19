@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #canvas-holder {
+            transition: 1s;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="canvas-holder">
+        <canvas id="dialog"></canvas>
+    </div>
+
+    <script>
+        let context = document.getElementById('dialog').getContext('2d');
+        let ctx = context;
+        context.lineWidth = 3;
+        //context.fillStyle = 'rgba(255, 255, 255, 0.7)';
+        context.strokeStyle = 'rgba(0, 0, 0, 0.7)';
+
+
+        // context.moveTo(0, 0);
+        // context.beginPath();
+        // context.arc(150, 105, 100, Math.PI / 180 * 165, Math.PI / 180 * 510);
+        // context.lineTo(40, 165);
+        // context.lineTo(53, 130);
+        // context.font = "48px serif"
+        // alert(context.measureText("第一天").width);
+        // context.fillText("第一天!", 70, 110);
+
+        // context.stroke();
+
+        function draw(text) {
+            context.font = "25px serif";
+            let length = context.measureText(text).width;
+            console.log(length)
+            let delta = (length - 80) > 0 ? (length - 80) : 0;
+            if(125+delta > 290) {
+                // 扩大canvas面积
+                document.getElementById('dialog').width = `${125+delta+10}`;
+            }
+            context.font = "25px serif";
+            let ctx = document.getElementById('dialog').getContext('2d');
+            context.lineWidth = 3;
+            //context.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            context.strokeStyle = 'rgba(0, 0, 0, 0.7)';
+            
+            ctx.beginPath();
+            ctx.moveTo(75, 25);
+            ctx.quadraticCurveTo(25, 25, 25, 62.5);
+            ctx.quadraticCurveTo(25, 100, 50, 100);
+            ctx.quadraticCurveTo(50, 120, 30, 125);
+            ctx.quadraticCurveTo(60, 120, 65, 100);
+            ctx.lineTo(65 + delta, 100);
+            ctx.quadraticCurveTo(125 + delta, 100, 125 + delta, 62.5);
+            ctx.quadraticCurveTo(125 + delta, 25, 75 + delta, 25);
+            ctx.lineTo(75, 25);
+            ctx.fillText(text, 35, 72)
+            ctx.stroke();
+        }
+        draw("今天是第一天，要努力哦");
+    </script>
+</body>
+
+</html>
